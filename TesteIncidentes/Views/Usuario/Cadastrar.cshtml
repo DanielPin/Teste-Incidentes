@@ -1,0 +1,137 @@
+﻿@model TesteIncidentes.Models.Usuario
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> CrudDev</title>
+
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script type="text/javascript" src="~/js/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="~/js/jquery.mask.js"></script>
+    <style type="text/css">
+
+        #alerta {
+            position: absolute;
+            border-radius: 5px;
+            background-color: #3CB371;
+            font-weight: bold;
+            font-size: 20px;
+            left: 50%;
+            top: 50%;
+            width: 350px; 
+            height: 80px; 
+            margin-left: -150px;
+            margin-top: -125px;
+            color: white;
+            text-align: center; 
+            z-index: 1000; 
+        }
+        #btnAlerta {     
+        background-color: Transparent;      
+        border: none;
+        cursor:pointer;
+        overflow: hidden;    
+        float:right;
+        }
+
+        
+        
+    </style>
+
+
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="menu">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Usuario" asp-action="Cadastrar">Cadastrar</a></li>
+                    <li><a asp-area="" asp-controller="Listar" asp-action="Listar">Listar</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <div class="container" id="form1">
+
+        <form asp-action="Cadastrar">
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Nome">NOME:</label>
+                    <input type="text" asp-for="Nome" id="nome" class="form-control" placeholder="Digite seu nome" required minlength="3" />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="EMail">E-Mail:</label>
+                    <input type="email" asp-for="EMail" id="email" class="form-control" placeholder="Digite seu E-Mail" />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="DataNascimento">Data De Nascimento:</label>
+                    <input type="text" asp-for="DataNascimento" id="nascimento" class="form-control" placeholder="dd/mm/aaaa" required />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label asp-for="Senha">Senha:</label>
+                    <input type="password" asp-for="Senha" id="nascimento" class="form-control" placeholder="***********" />
+                </div>
+
+
+                <div class="form-group col-md-6">
+                    <label asp-for="SexoId">Sexo</label>
+                    <select asp-for="SexoId" class="form-control">
+                        <option value=2>Masculino</option>
+                        <option value=1>Feminino</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-7">
+                <button type="submit" class="btn btn-primary" value="Cadastrar" onclick="aMessage()">
+                    Cadastrar
+                </button>
+            </div>
+
+        </form>
+
+
+
+    </div>
+    @if (TempData["mensagem"] != null)
+    {
+<div id="alerta">
+    <button onclick="ApagarAlerta('alerta')" id="btnAlerta">X</button><br />
+    Cadastro efetuado com sucesso
+
+
+</div>
+
+    }
+
+
+</body>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#nascimento').mask("00/00/0000");
+    });
+</script>
+    <script>
+        function ApagarAlerta(p) {
+           var display = document.getElementById(p).style.display;
+            if(display == "none")
+                document.getElementById(p).style.display = 'block';
+            else
+                document.getElementById(p).style.display = 'none';
+        }
+    </script>
+
+</html>

@@ -1,0 +1,152 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.PagedList<TesteIncidentes.Models.Usuario>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> CrudDev</title>
+
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script type="text/javascript" src="~/js/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="~/js/jquery.mask.js"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="menu">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"> 
+                    <li><a asp-area="" asp-controller="Usuario" asp-action="Cadastrar">Cadastrar</a></li>
+                    <li><a asp-area="" asp-controller="Listar" asp-action="Listar">Listar</a></li>i>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <div class="container">
+
+
+        <form action="Listar" method="post">
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Nome:</label>
+                    <input type="text" name="nome" id="nome" class="form-control" placeholder="nome" />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Ativo</label>
+                    <select name="ativo" id="ativo" class="form-control">
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
+                    </select>
+                </div>
+
+
+
+                <div class="form-group col-md-7">
+                    <button type="submit" class="btn btn-primary" value="Listar">
+                        Procurar
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Nome")
+                </th>
+                <th>
+                    @Html.DisplayName("DataNascimento")
+                </th>
+                <th>
+                    @Html.DisplayName("EMail")
+                </th>
+                <th>
+                    @Html.DisplayName("Sexo")
+                </th>
+                <th>
+                    @Html.DisplayName("Ativo")
+                </th>
+
+
+
+            </tr>
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelTem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelTem => item.DataNascimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelTem => item.EMail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelTem => item.Sexo.Descricao)
+
+            </td>
+            <td>
+                @if (item.Ativo)
+                {
+                    var ativo = "sim";
+                    @ativo
+                }
+                else
+                {
+                    var ativo = "não";
+                    @ativo
+                }
+
+            </td>
+
+
+
+
+        </tr>
+            }
+
+
+
+        </table>
+
+        <div class="row">
+            <div class="col-md-8">
+                @Html.PagedListPager(Model, pagina => Url.Action("Listar", new { pagina,Nome = ViewBag.nome, Ativo = ViewBag.ativo}))
+            </div>
+            <div class="col-md-4">
+                <span class="pull-right">
+                    Listando registros de @Model.FirstItemOnPage a @Model.LastItemOnPage de um total de @Model.TotalItemCount
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</body>
+
+<script type="text/javascript">
+    //Mascara CPF
+    $(document).ready(function () {
+        $('#cpf').mask("000.000.000-00");
+    });
+</script>
+</html>
